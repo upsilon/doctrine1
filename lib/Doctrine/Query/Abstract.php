@@ -944,9 +944,6 @@ abstract class Doctrine_Query_Abstract
             
                     // Initialize prepared parameters array
                     $this->_execParams = $this->getFlattenedParams();
-                    
-                    // Fix possible array parameter values in SQL params
-                    $this->fixArrayParameterValues($this->getInternalParams());
                 } else {
                     // Generate SQL or pick already processed one
                     $query = $this->getSqlQuery($params);
@@ -967,7 +964,10 @@ abstract class Doctrine_Query_Abstract
         } else {
             $query = $this->_view->getSelectSql();
         }
-        
+
+        // Fix possible array parameter values in SQL params
+        $this->fixArrayParameterValues($this->getInternalParams());
+
         // Get prepared SQL params for execution
         $params = $this->getInternalParams();
 
